@@ -1,0 +1,2 @@
+# CertsTrustSetting
+Firefox Addon
