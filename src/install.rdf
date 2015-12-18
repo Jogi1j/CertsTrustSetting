@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+
+  <Description about="urn:mozilla:install-manifest">
+    <em:id>certstrustsetting@certstrustsetting.com</em:id>
+    <em:name>Certs Trust Setting</em:name>
+    <em:description>Certification trust settings. In your profile direcory create directory "CertsTrustSetting". Insert 3 json file with certs = 1. certs.json - all certs, 2. certsSelection.json - only your selection of trust certs and 3. certsImportant.json with only important certs). Then you can delete trust of all certs form certs.json and inport only selected or important list certs from this addon. If cert is not in json file, then will not edit cert's trust.</em:description>
+    <em:version>0.1</em:version>
+    <em:creator>Appcoast</em:creator>
+    <em:homepageURL>https://developer.mozilla.org/</em:homepageURL>
+    <em:type>2</em:type>
+
+    <!-- Mozilla Firefox -->
+    <em:targetApplication>
+      <Description>
+        <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+        <em:minVersion>3.0</em:minVersion>
+        <em:maxVersion>6.0a1</em:maxVersion>
+      </Description>
+    </em:targetApplication>
+  </Description>
+</RDF>

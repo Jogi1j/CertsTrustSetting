@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet type="text/css" href="chrome://global/skin/" ?>
+<?xml-stylesheet type="text/css"
+  href="chrome://certstrustsetting/skin/browserOverlay.css" ?>
+
+<!DOCTYPE overlay SYSTEM
+  "chrome://certstrustsetting/locale/browserOverlay.dtd">
+
+<overlay id="certstrustsetting-browser-overlay"
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+
+  <script type="application/x-javascript"
+    src="chrome://certstrustsetting/content/browserOverlay.js" />
+
+  <stringbundleset id="stringbundleset">
+    <stringbundle id="certstrustsetting-string-bundle"
+      src="chrome://certstrustsetting/locale/browserOverlay.properties" />
+  </stringbundleset>
+  
+  <toolbox id="navigator-toolbox">
+      <toolbar id="certstrustsetting-toolbar" toolbarname="&certstrustsetting.toolbarName.label;"
+        accesskey="&certstrustsetting.toolbar.accesskey;"
+        customizable="true" mode="icons" context="toolbar-context-menu" 
+        defaultset="certstrustsetting-hello-world-button"
+        insertbefore="PersonalToolbar" >
+          <toolbaritem>
+              <button label="&certstrustsetting.toolbar.setcertsback.label;"
+                  accesskey="&certstrustsetting.toolbar.setcertsback.accesskey;"
+                  oncommand="CertsTrustSetting.BrowserOverlay.setCertsBack();" />
+              <button label="&certstrustsetting.toolbar.setselectioncertsback.label;"
+                  accesskey="&certstrustsetting.toolbar.setselectioncertsback.accesskey;"
+                  oncommand="CertsTrustSetting.BrowserOverlay.setSelectionCertsBack();" />
+              <button label="&certstrustsetting.toolbar.setimportantcertsback.label;"
+                  accesskey="&certstrustsetting.toolbar.setimportantcertsback.accesskey;"
+                  oncommand="CertsTrustSetting.BrowserOverlay.setImportantCertsBack();" />
+              <button label="&certstrustsetting.toolbar.cleancerts.label;"
+                  accesskey="&certstrustsetting.toolbar.cleancerts.accesskey;"
+                  oncommand="CertsTrustSetting.BrowserOverlay.cleanCerts();" />
+              
+              
+              <button label="        Json"
+                 oncommand="CertsTrustSetting.BrowserOverlay.loadJson();" /> 
+              <button label="View All Certs"
+                 oncommand="CertsTrustSetting.BrowserOverlay.viewCerts();" />
+              <button label="Export Certs"
+                 oncommand="CertsTrustSetting.BrowserOverlay.exportCerts();" />
+              <button label="Import Certs"
+                 oncommand="CertsTrustSetting.BrowserOverlay.importCerts();" />
+              
+          </toolbaritem>  
+      </toolbar>   
+  </toolbox>
+
+  <menupopup id="menu_ToolsPopup">
+    <menu id="certstrustsetting-menu" label="&certstrustsetting.menu.label;"
+      accesskey="&certstrustsetting.menu.accesskey;"
+      insertafter="javascriptConsole,devToolsSeparator">
+      <menupopup>
+        <menuitem id="certstrustsetting-menuitem-setcertsback"
+          label="&certstrustsetting.menuitem.setcertsback.label;"
+          accesskey="&certstrustsetting.menuitem.setcertsback.accesskey;"
+          oncommand="CertsTrustSetting.BrowserOverlay.setCertsBack();" />
+        <menuitem id="certstrustsetting-menuitem-setselectioncertsback"
+          label="&certstrustsetting.menuitem.setselectioncertsback.label;"
+          accesskey="&certstrustsetting.menuitem.setselectioncertsback.accesskey;"
+          oncommand="CertsTrustSetting.BrowserOverlay.setSelectionCertsBack();" />        
+        <menuitem id="certstrustsetting-menuitem-setimportantcertsback"
+          label="&certstrustsetting.menuitem.setimportantcertsback.label;"
+          accesskey="&certstrustsetting.menuitem.setimportantcertsback.accesskey;"
+          oncommand="CertsTrustSetting.BrowserOverlay.setImportantCertsBack();" />
+        <menuitem id="certstrustsetting-menuitem-cleancerts"
+          label="&certstrustsetting.menuitem.cleancerts.label;"
+          accesskey="&certstrustsetting.menuitem.cleancerts.accesskey;"
+          oncommand="CertsTrustSetting.BrowserOverlay.cleanCerts();" />  
+      </menupopup>
+    </menu>
+  </menupopup>
+</overlay>

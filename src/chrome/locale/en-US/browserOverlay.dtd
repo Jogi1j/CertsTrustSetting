@@ -1,0 +1,24 @@
+<!ENTITY certstrustsetting.menu.label                                "Certs Trust Setting">
+<!ENTITY certstrustsetting.menu.accesskey                            "r">
+<!ENTITY certstrustsetting.menuitem.setcertsback.label               "Vrátit důvěru certifikátů">
+<!ENTITY certstrustsetting.menuitem.setcertsback.accesskey           "á">
+<!ENTITY certstrustsetting.menuitem.setselectioncertsback.label      "Vrátit důvěru vybraných certifikátů">
+<!ENTITY certstrustsetting.menuitem.setselectioncertsback.accesskey  "ů">
+<!ENTITY certstrustsetting.menuitem.setimportantcertsback.label      "Vrátit důvěru důležitých certifikátů">
+<!ENTITY certstrustsetting.menuitem.setimportantcertsback.accesskey  "ě">
+<!ENTITY certstrustsetting.menuitem.cleancerts.label                 "Vyčistit důvěru certifikátů CA">
+<!ENTITY certstrustsetting.menuitem.cleancerts.accesskey             "č">
+
+<!ENTITY certstrustsetting.toolbarName.label                         "CertTrustSetting Toolbar">
+<!ENTITY certstrustsetting.toolbar.accesskey                         "t">
+<!ENTITY certstrustsetting.toolbar.setcertsback.label                "Vrátit důvěru certifikátů">
+<!ENTITY certstrustsetting.toolbar.setcertsback.accesskey            "i">
+<!ENTITY certstrustsetting.toolbar.setselectioncertsback.label       "Vrátit důvěru vybraných certifikátů">
+<!ENTITY certstrustsetting.toolbar.setselectioncertsback.accesskey   "n">
+<!ENTITY certstrustsetting.toolbar.setimportantcertsback.label       "Vrátit důvěru důležitých certifikátů">
+<!ENTITY certstrustsetting.toolbar.setimportantcertsback.accesskey   "ý">
+<!ENTITY certstrustsetting.toolbar.cleancerts.label                  "Vyčistit důvěru certifikátů CA">
+<!ENTITY certstrustsetting.toolbar.cleancerts.accesskey              "d">
+
+
+

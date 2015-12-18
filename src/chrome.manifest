@@ -1,0 +1,6 @@
+content   certstrustsetting              jar:chrome/certstrustsetting.jar!/content/
+skin      certstrustsetting  classic/1.0 jar:chrome/certstrustsetting.jar!/skin/
+locale    certstrustsetting  en-US       jar:chrome/certstrustsetting.jar!/locale/en-US/
+resource  certstrustsetting              modules/
+
+overlay chrome://browser/content/browser.xul  chrome://certstrustsetting/content/browserOverlay.xul
