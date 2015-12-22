@@ -11,16 +11,16 @@ if ("undefined" == typeof(CertsTrustSetting)) {
 };
 
 /**
- * Controls the browser overlay for the Hello World extension.
+ * Controls the browser overlay for the Certs Trust Setting extension.
  */
 CertsTrustSetting.BrowserOverlay = {
   
   init : function() {
+    // Init function for logging
     let formatter = new Log4Moz.BasicFormatter();
     let root = Log4Moz.repository.rootLogger;
     let logFile = this.getLocalDirectory(); // remember this?
     let appender;
-    
     logFile.append("log.txt");
     
     // Loggers are hierarchical, lowering this log level will affect all
@@ -32,11 +32,12 @@ CertsTrustSetting.BrowserOverlay = {
     appender.level = Log4Moz.Level["All"];
     root.addAppender(appender);
     
-    // vytvoření
+    // create logger
     this._logger = Log4Moz.repository.getLogger("CertsTrustSetting.SomeObject");
     this._logger.level = Log4Moz.Level["All"];
- 
   },
+  
+  // view
   viewCerts : function() {
     var certDB = Cc["@mozilla.org/security/x509certdb;1"].getService(Ci.nsIX509CertDB);  
     var certs = certDB.getCerts();  
@@ -63,62 +64,8 @@ CertsTrustSetting.BrowserOverlay = {
   },
   
   
-  // Export all certifications
-  exportCerts: function() {
-    var certDB = Cc["@mozilla.org/security/x509certdb;1"].getService(Ci.nsIX509CertDB);
-    var certs = certDB.getCerts();
-    var enumerator = certs.getEnumerator();
-    var s = "";
-    var count = 0;
-    var certArray = [];
-    while (enumerator.hasMoreElements()) {
-      var cert = enumerator.getNext().QueryInterface(Ci.nsIX509Cert);
-      
-      //if (cert.commonName != "") {
-        count++;
-        certArray[count] = cert;
-        //certArray[count] = cert.issuer;
-        //certArray[count] = certs.getChain();
-      //}
-    }
-
-    // Pokus 2 přes getLocalDirextory
-    let exportDB = this.getLocalDirectory();
-    exportDB.append("certifikaty");
-    var pokus = [];
-    pokus[0] = certArray[cislo];
-        
-    //certDB.exportPKCS12File(null,exportDB,0,[]); //works !!
-    //certDB.exportPKCS12File(null,exportDB,1,pokus);
-    certDB.exportPKCS12File(null,exportDB,count,certArray);
-    
-    if (!exportDB.exists() || !exportDB.isDirectory()) {
-      // read and write permissions to owner and group, read-only for others.
-      exportDB.create(Ci.nsIFile.NORMAL_FILE_TYPE, 0774);
-    }     
-    window.alert("Export " + count + " certifikátů.");
-  },
   
-  
-  
-  // Import certifications
-  importCerts: function() {
-    var certDB = Cc["@mozilla.org/security/x509certdb;1"].getService(Ci.nsIX509CertDB);
-    
-    // pokus 1
-    let file = this.getLocalDirectory();
-    file.append("addons.mozilla.org.pfx");
-    
-    //certDB.importCertsFromFile(null,file,CA_CERT);
-    //certDB.importPKCS12File(null,file);
-    //certDB.addCertFromBase64(cert, CertTrust, "");
-    //certDB.addCertFromBase64(cert, CertTrust, "");
-    
-    window.alert("import cert done");
-  },
-  
-  
-    // Create local store for addon
+  // Create local store for addon
   getLocalDirectory : function() {
     let directoryService =
       Cc["@mozilla.org/file/directory_service;1"].
@@ -138,6 +85,65 @@ CertsTrustSetting.BrowserOverlay = {
   
   
   
+  getCertsToJson : function() {
+    Components.utils.import("resource://gre/modules/NetUtil.jsm");
+    Components.utils.import("resource://gre/modules/FileUtils.jsm");
+    
+    // file is nsIFile, data is a string    
+    var file  = this.getLocalDirectory();
+    file.append("mycerts.json");
+    var data = '{"certs":[';
+    
+    // write info from cert8.db
+    var certDB = Cc["@mozilla.org/security/x509certdb;1"].getService(Ci.nsIX509CertDB);
+    var certs = certDB.getCerts();
+    var enumerator = certs.getEnumerator();
+    while (enumerator.hasMoreElements()) {
+      var cert = enumerator.getNext().QueryInterface(Ci.nsIX509Cert);
+      
+      data = data + '\n{';
+      data = data + '"certName":"' + cert.commonName + '"';
+      data = data + ', "certType":"' + cert.certType + '"';
+      //if (cert.certType == 2) {
+      //  data = data + ', "trustSetting":"u"';
+      //} else if (cert.certType == "8") {
+      //  data = data + ', "trustSetting":"s"';
+      //} else {
+        data = data + ', "trustSetting":"' + cert.certType + '"';
+      //}
+      data = data + ', "organization":"' + cert.organization + '"';
+      data = data + ', "serialNumber":"' + cert.serialNumber + '"';
+      data = data + ', "dbKey":"' + cert.dbKey + '"';
+      data = data + '},'
+      
+          
+    }
+    data = data + ']}';
+    
+    // You can also optionally pass a flags parameter here. It defaults to
+    // FileUtils.MODE_WRONLY | FileUtils.MODE_CREATE | FileUtils.MODE_TRUNCATE;
+    var ostream = FileUtils.openSafeFileOutputStream(file);
+    
+    var converter = Cc["@mozilla.org/intl/scriptableunicodeconverter"].
+                    createInstance(Ci.nsIScriptableUnicodeConverter);
+    converter.charset = "UTF-8";
+    var istream = converter.convertToInputStream(data);
+    
+    // The last argument (the callback) is optional.
+    NetUtil.asyncCopy(istream, ostream, function(status) {
+      if (!Components.isSuccessCode(status)) {
+        // Handle error!
+        return;
+      }
+    
+      // Data has been written to the file.
+      file.create(Ci.nsIFile.NORMAL_FILE_TYPE, 0774);
+    });
+    
+    window.alert("Export certifikátů proběhl vpořádku. \n Ve složce profilu/CertsTrustSetting byl vytvořen soubor json.");
+  },
+  
+  
   // Delete trust from all certs from certs.json
   cleanCerts : function() {
     var file = this.getLocalDirectory();
@@ -155,15 +161,24 @@ CertsTrustSetting.BrowserOverlay = {
       var enumerator = certs.getEnumerator();
       while (enumerator.hasMoreElements()) {
         var cert = enumerator.getNext().QueryInterface(Ci.nsIX509Cert);
-        //if (cert.commonName == "addons.mozilla.org") {
-        //    window.alert("\n Server: " + cert.certType);
-        //    certDB.setCertTrust(cert, SERVER_CERT, "CT,CT,CT");
-        //    //certDB.setCertTrustFromString(cert,",,");
-        //  }
-        //  if (cert.commonName == "Visa eCommerce Root") {
-        //    window.alert("\n CA: "  + cert.certType);
-        //    
-        //  } 
+        if (cert.commonName == "login.skype.com") {
+            //window.alert("\n Server: " + cert.commonName + cert.organization + " - "
+            //             + cert.certType + " - '" + cert.certType + "'");
+            //certDB.setCertTrust(cert, SERVER_CERT, "CT,CT,CT");
+            //certDB.setCertTrustFromString(cert,"");
+            //certDB.setCertTrustFromString(cert,"s");
+            
+            var verified;
+            var usages;
+            cert.getUsagesString(true, TRUSTED_SSL, usages);
+            window.alert(usages);
+
+        }
+        if (cert.certType == 2) {   
+            window.alert("\n USER: "  + cert.commonName + cert.organization + " - "
+                         + cert.certType + " - " + cert.certType );
+            
+        } 
         for (i = 0; i < jsonObject.certs.length; i++) {
           if (cert.commonName == "" ) {
             if (cert.organization == jsonObject.certs[i].organization) {
@@ -189,6 +204,7 @@ CertsTrustSetting.BrowserOverlay = {
     request.send(null);
     this._logger.info("Metoda cleanCerts");
   },
+  
   
   
   // Set trust all certs from certs.json back
@@ -235,6 +251,7 @@ CertsTrustSetting.BrowserOverlay = {
   },
   
   
+  
   // Set Selection certs from certsSelection.json back
   setSelectionCertsBack : function() {
     var file = this.getLocalDirectory();
@@ -277,6 +294,7 @@ CertsTrustSetting.BrowserOverlay = {
     request.send(null);
     this._logger.info("Metoda setSelectionCertsBack");
   },
+  
   
   
   // Set IMPORTANT certs from certsImportant.json back
@@ -322,6 +340,8 @@ CertsTrustSetting.BrowserOverlay = {
     this._logger.info("Metoda setImportantCertsBack");
 
   },
+  
+  
   
   // Load .json file
   loadJson : function() {

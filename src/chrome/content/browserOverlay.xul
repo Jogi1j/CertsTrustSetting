@@ -43,10 +43,8 @@
                  oncommand="CertsTrustSetting.BrowserOverlay.loadJson();" /> 
               <button label="View All Certs"
                  oncommand="CertsTrustSetting.BrowserOverlay.viewCerts();" />
-              <button label="Export Certs"
-                 oncommand="CertsTrustSetting.BrowserOverlay.exportCerts();" />
-              <button label="Import Certs"
-                 oncommand="CertsTrustSetting.BrowserOverlay.importCerts();" />
+              <button label="Export nastavení cert to json"
+                 oncommand="CertsTrustSetting.BrowserOverlay.getCertsToJson();" />
               
           </toolbaritem>  
       </toolbar>   
