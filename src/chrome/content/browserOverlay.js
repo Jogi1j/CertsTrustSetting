@@ -91,7 +91,7 @@ CertsTrustSetting.BrowserOverlay = {
     
     // file is nsIFile, data is a string    
     var file  = this.getLocalDirectory();
-    file.append("mycerts.json");
+    file.append("myCerts.json");
     var data = '{"certs":[';
     
     // write info from cert8.db
@@ -104,21 +104,20 @@ CertsTrustSetting.BrowserOverlay = {
       data = data + '\n{';
       data = data + '"certName":"' + cert.commonName + '"';
       data = data + ', "certType":"' + cert.certType + '"';
-      //if (cert.certType == 2) {
-      //  data = data + ', "trustSetting":"u"';
-      //} else if (cert.certType == "8") {
-      //  data = data + ', "trustSetting":"s"';
-      //} else {
-        data = data + ', "trustSetting":"' + cert.certType + '"';
-      //}
+      if (cert.certType == 2) {
+        data = data + ', "trustSetting":"u,u,u"';
+      } else if (cert.certType == 8) {
+        data = data + ', "trustSetting":"P,P,P"';
+      } else {
+        data = data + ', "trustSetting":"C,C,C"';
+      }
       data = data + ', "organization":"' + cert.organization + '"';
       data = data + ', "serialNumber":"' + cert.serialNumber + '"';
-      data = data + ', "dbKey":"' + cert.dbKey + '"';
       data = data + '},'
       
           
     }
-    data = data + ']}';
+    data = data + '\n]}';
     
     // You can also optionally pass a flags parameter here. It defaults to
     // FileUtils.MODE_WRONLY | FileUtils.MODE_CREATE | FileUtils.MODE_TRUNCATE;
@@ -140,7 +139,7 @@ CertsTrustSetting.BrowserOverlay = {
       file.create(Ci.nsIFile.NORMAL_FILE_TYPE, 0774);
     });
     
-    window.alert("Export certifikátů proběhl vpořádku. \n Ve složce profilu/CertsTrustSetting byl vytvořen soubor json.");
+    window.alert("Export certifikátů proběhl vpořádku. \nVe složce profilu/CertsTrustSetting byl vytvořen soubor json.");
   },
   
   
@@ -152,45 +151,53 @@ CertsTrustSetting.BrowserOverlay = {
     let request = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"]
                   .createInstance(Components.interfaces.nsIXMLHttpRequest);
     request.onload = function(aEvent) {
+      
       let text = aEvent.target.responseText;
       let jsonObject = JSON.parse(text);
-      
       // Set certs
       var certDB = Cc["@mozilla.org/security/x509certdb;1"].getService(Ci.nsIX509CertDB);
       var certs = certDB.getCerts();
       var enumerator = certs.getEnumerator();
       while (enumerator.hasMoreElements()) {
         var cert = enumerator.getNext().QueryInterface(Ci.nsIX509Cert);
-        if (cert.commonName == "login.skype.com") {
+        //if ((cert.commonName == "Deutsche Telekom Root CA 2")) {
+          //login.skype.com
             //window.alert("\n Server: " + cert.commonName + cert.organization + " - "
             //             + cert.certType + " - '" + cert.certType + "'");
             //certDB.setCertTrust(cert, SERVER_CERT, "CT,CT,CT");
             //certDB.setCertTrustFromString(cert,"");
-            //certDB.setCertTrustFromString(cert,"s");
+            //certDB.setCertTrustFromString(cert,"C,C,C");
             
-            var verified;
-            var usages;
-            cert.getUsagesString(true, TRUSTED_SSL, usages);
-            window.alert(usages);
+            /**
+             *  Obtain a single comma separated human readable string describing
+             *  the certificate's certified usages.
+             *
+             *  @param localOnly Do not hit the network, even if revocation information
+             *                   downloading is currently activated.
+             *  @param verified The certificate verification result, see constants.
+             *  @param purposes The string listing the usages.
+             *  
+             *  void getUsagesString(in boolean localOnly, out uint32_t verified, out AString usages);
+             */
 
-        }
-        if (cert.certType == 2) {   
-            window.alert("\n USER: "  + cert.commonName + cert.organization + " - "
-                         + cert.certType + " - " + cert.certType );
-            
-        } 
+            //var verified, usages;
+            //window.alert("start");
+            ////window.alert(cert.getUsagesString(false, verified, usages));
+            //cert.getUsagesString(false, verified, usages);
+            ////cert.getUsagesString(true, verified);
+            ////cert.getUsagesArray( true, verified, 1, usages)
+            //window.alert("skype first");
+            //window.alert(usages);
+            //window.alert("skype second");
+            //window.alett(usages[0]);
+            //window.alert("END !!!");
+
+        //}
+
         for (i = 0; i < jsonObject.certs.length; i++) {
-          if (cert.commonName == "" ) {
-            if (cert.organization == jsonObject.certs[i].organization) {
-              if (cert.serialNumber == "00"){
-                if (cert.organizationalUnit == jsonObject.certs[i].organizationalUnit){
-                  certDB.setCertTrustFromString(cert,",,");
-                }
-              }else if (cert.serialNumber == jsonObject.certs[i].serialNumber){      
-                certDB.setCertTrustFromString(cert,",,");
-              }
-            }
-          } else if (cert.commonName == jsonObject.certs[i].certName) {
+          if (cert.commonName == jsonObject.certs[i].certName
+              && cert.organization == jsonObject.certs[i].organization
+              && cert.serialNumber == jsonObject.certs[i].serialNumber) {
             certDB.setCertTrustFromString(cert,",,");
           }
         }     
@@ -225,17 +232,9 @@ CertsTrustSetting.BrowserOverlay = {
       while (enumerator.hasMoreElements()) {
         var cert = enumerator.getNext().QueryInterface(Ci.nsIX509Cert);       
         for (i = 0; i < jsonObject.certs.length; i++) {
-          if (cert.commonName == "" ) {
-            if (cert.organization == jsonObject.certs[i].organization) {
-              if (cert.serialNumber == "00"){
-                if (cert.organizationalUnit == jsonObject.certs[i].organizationalUnit){
-                  certDB.setCertTrustFromString(cert,jsonObject.certs[i].trustSetting);
-                }
-              }else if (cert.serialNumber == jsonObject.certs[i].serialNumber){
-                certDB.setCertTrustFromString(cert,jsonObject.certs[i].trustSetting);
-              }
-            }
-          } else if (cert.commonName == jsonObject.certs[i].certName) {
+          if (cert.commonName == jsonObject.certs[i].certName
+              && cert.organization == jsonObject.certs[i].organization
+              && cert.serialNumber == jsonObject.certs[i].serialNumber) {
             certDB.setCertTrustFromString(cert,jsonObject.certs[i].trustSetting);
           }
         }  
@@ -270,17 +269,9 @@ CertsTrustSetting.BrowserOverlay = {
       while (enumerator.hasMoreElements()) {
         var cert = enumerator.getNext().QueryInterface(Ci.nsIX509Cert);       
         for (i = 0; i < jsonObject.certs.length; i++) {
-          if (cert.commonName == "" ) {
-            if (cert.organization == jsonObject.certs[i].organization) {
-              if (cert.serialNumber == "00"){
-                if (cert.organizationalUnit == jsonObject.certs[i].organizationalUnit){
-                  certDB.setCertTrustFromString(cert,jsonObject.certs[i].trustSetting);
-                }
-              }else if (cert.serialNumber == jsonObject.certs[i].serialNumber){
-                certDB.setCertTrustFromString(cert,jsonObject.certs[i].trustSetting);
-              }
-            }
-          } else if (cert.commonName == jsonObject.certs[i].certName) {
+          if (cert.commonName == jsonObject.certs[i].certName
+              && cert.organization == jsonObject.certs[i].organization
+              && cert.serialNumber == jsonObject.certs[i].serialNumber) {
             certDB.setCertTrustFromString(cert,jsonObject.certs[i].trustSetting);
           }
         }  
@@ -315,17 +306,9 @@ CertsTrustSetting.BrowserOverlay = {
       while (enumerator.hasMoreElements()) {
         var cert = enumerator.getNext().QueryInterface(Ci.nsIX509Cert);       
         for (i = 0; i < jsonObject.certs.length; i++) {
-          if (cert.commonName == "" ) {
-            if (cert.organization == jsonObject.certs[i].organization) {
-              if (cert.serialNumber == "00"){
-                if (cert.organizationalUnit == jsonObject.certs[i].organizationalUnit){
-                  certDB.setCertTrustFromString(cert,jsonObject.certs[i].trustSetting);
-                }
-              }else if (cert.serialNumber == jsonObject.certs[i].serialNumber){
-                certDB.setCertTrustFromString(cert,jsonObject.certs[i].trustSetting);
-              }
-            }
-          } else if (cert.commonName == jsonObject.certs[i].certName) {
+          if (cert.commonName == jsonObject.certs[i].certName
+              && cert.organization == jsonObject.certs[i].organization
+              && cert.serialNumber == jsonObject.certs[i].serialNumber) {
             certDB.setCertTrustFromString(cert,jsonObject.certs[i].trustSetting);
           }
         }  

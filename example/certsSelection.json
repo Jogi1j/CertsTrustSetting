@@ -1,0 +1,10 @@
+{"certs":[
+{"certName":"DigiCert SHA2 Secure Server CA", "certType":"1", "trustSetting":",,", "organization":"DigiCert Inc", "serialNumber":"01:FD:A3:EB:6E:CA:75:C8:88:43:8B:72:4B:CF:BC:91"},
+{"certName":"DigiCert Secure Server CA", "certType":"1", "trustSetting":",,", "organization":"DigiCert Inc", "serialNumber":"06:9E:1D:B7:7F:CF:1D:FB:A9:7A:F5:E5:C9:A2:40:37"},
+{"certName":"VeriSign Class 3 Secure Server CA - G3", "certType":"1", "trustSetting":",,", "organization":"VeriSign, Inc.", "serialNumber":"6E:CC:7A:A5:A7:03:20:09:B8:CE:BC:F4:E9:52:D4:91"},
+{"certName":"GeoTrust EV SSL CA - G4", "certType":"1", "trustSetting":",,", "organization":"GeoTrust Inc.", "serialNumber":"6E:8A:90:EB:CF:F0:44:8A:72:0D:08:05:D0:82:A5:44"},
+{"certName":"DigiCert SHA2 Extended Validation Server CA", "certType":"1", "trustSetting":",,", "organization":"DigiCert Inc", "serialNumber":"0C:79:A9:44:B0:8C:11:95:20:92:61:5F:E2:6B:1D:83"},
+{"certName":"DigiCert SHA2 High Assurance Server CA", "certType":"1", "trustSetting":",,", "organization":"DigiCert Inc", "serialNumber":"04:E1:E7:A4:DC:5C:F2:F3:6D:C0:2B:42:B8:5D:15:9F"},
+{"certName":"DigiCert High Assurance EV CA-1", "certType":"1", "trustSetting":",,", "organization":"DigiCert Inc", "serialNumber":"03:37:B9:28:34:7C:60:A6:AE:C5:AD:B1:21:7F:38:60"},
+{"certName":"DigiCert High Assurance CA-3", "certType":"1", "trustSetting":",,", "organization":"DigiCert Inc", "serialNumber":"0A:5F:11:4D:03:5B:17:91:17:D2:EF:D4:03:8C:3F:3B"}
+]}

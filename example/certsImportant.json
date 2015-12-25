@@ -1,0 +1,21 @@
+{"certs":[
+  {"certName":"login.yahoo.com", "certType":"8", "trustSetting":"P,P,P", "organization":"Google Ltd.", "serialNumber":"39:2A:43:4F:0E:07:DF:1F:8A:A3:05:DE:34:E0:C2:29"},
+  {"certName":"DigiNotar Cyber CA", "certType":"8", "trustSetting":"P,P,P", "organization":"DigiNotar", "serialNumber":"0F:FF:FF:FF"},
+  {"certName":"addons.mozilla.org", "certType":"8", "trustSetting":"P,P,P", "organization":"Google Ltd.", "serialNumber":"00:92:39:D5:34:8F:40:D1:69:5A:74:54:70:E1:F2:3F:43"},
+  {"certName":"login.skype.com", "certType":"8", "trustSetting":"P,P,P", "organization":"Google Ltd.", "serialNumber":"00:E9:02:8B:95:78:E4:15:DC:1A:71:0A:2B:88:15:44:47"},
+  {"certName":"Digisign Server ID - (Enrich)", "certType":"8", "trustSetting":"P,P,P", "organization":"Digicert Sdn. Bhd.", "serialNumber":"07:FF:FF:FF:FF:FF"},
+  {"certName":"MD5 Collisions Inc. (http://www.phreedom.org/md5)", "certType":"8", "trustSetting":"P,P,P", "organization":"", "serialNumber":"42"},
+  {"certName":"login.yahoo.com", "certType":"8", "trustSetting":"P,P,P", "organization":"Google Ltd.", "serialNumber":"3E:75:CE:D4:6B:69:30:21:21:88:30:AE:86:A8:2A:71"},
+  {"certName":"Digisign Server ID (Enrich)", "certType":"8", "trustSetting":"P,P,P", "organization":"Digicert Sdn. Bhd.", "serialNumber":"07:FF:FF:FF:FF:FF"},
+  {"certName":"DigiNotar Cyber CA", "certType":"8", "trustSetting":"P,P,P", "organization":"DigiNotar", "serialNumber":"0F:FF:FF:FF"},
+  {"certName":"DigiNotar PKIoverheid CA Organisatie - G2", "certType":"8", "trustSetting":"P,P,P", "organization":"DigiNotar B.V.", "serialNumber":"0F:FF:FF:FF"},
+  {"certName":"mail.google.com", "certType":"8", "trustSetting":"P,P,P", "organization":"Google Ltd.", "serialNumber":"04:7E:CB:E9:FC:A5:5F:7B:D0:9E:AE:36:E1:0C:AE:1E"},
+  {"certName":"DigiNotar Root CA", "certType":"8", "trustSetting":"P,P,P", "organization":"DigiNotar", "serialNumber":"0F:FF:FF:FF:FF:FF:FF:FF:FF:FF:FF:FF:FF:FF:FF:FF"},
+  {"certName":"global trustee", "certType":"8", "trustSetting":"P,P,P", "organization":"Global Trustee", "serialNumber":"00:D8:F3:5F:4E:B7:87:2B:2D:AB:06:92:E3:15:38:2F:B0"},
+  {"certName":"login.yahoo.com", "certType":"8", "trustSetting":"P,P,P", "organization":"Google Ltd.", "serialNumber":"00:D7:55:8F:DA:F5:F1:10:5B:B2:13:28:2B:70:77:29:A3"},
+  {"certName":"login.live.com", "certType":"8", "trustSetting":"P,P,P", "organization":"Google Ltd.", "serialNumber":"00:B0:B7:13:3E:D0:96:F9:B5:6F:AE:91:C8:74:BD:3A:C0"},
+  {"certName":"DigiNotar PKIoverheid CA Overheid en Bedrijven", "certType":"8", "trustSetting":"P,P,P", "organization":"DigiNotar B.V.", "serialNumber":"0F:FF:FF:FF"},
+  {"certName":"DigiNotar Services 1024 CA", "certType":"8", "trustSetting":"P,P,P", "organization":"DigiNotar", "serialNumber":"0F:FF:FF:FF"},
+  {"certName":"www.google.com", "certType":"8", "trustSetting":"P,P,P", "organization":"Google Ltd.", "serialNumber":"00:F5:C8:6A:F3:61:62:F1:3A:64:F5:4F:6D:C9:58:7C:06"},
+  {"certName":"MCSHOLDING TEST", "certType":"8", "trustSetting":"P,P,P", "organization":"MCSHOLDING", "serialNumber":"49:33:00:8E"}
+]}
