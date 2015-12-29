@@ -6,8 +6,10 @@
 <!ENTITY certstrustsetting.menuitem.setselectioncertsback.accesskey  "ů">
 <!ENTITY certstrustsetting.menuitem.setimportantcertsback.label      "Vrátit důvěru důležitých certifikátů">
 <!ENTITY certstrustsetting.menuitem.setimportantcertsback.accesskey  "ě">
-<!ENTITY certstrustsetting.menuitem.cleancerts.label                 "Vyčistit důvěru certifikátů CA">
+<!ENTITY certstrustsetting.menuitem.cleancerts.label                 "Vyčistit důvěru certifikátů">
 <!ENTITY certstrustsetting.menuitem.cleancerts.accesskey             "č">
+<!ENTITY certstrustsetting.menuitem.getcertstojson.label             "Export seznamu certifikátů">
+<!ENTITY certstrustsetting.menuitem.getcertstojson.accesskey         "f">
 
 <!ENTITY certstrustsetting.toolbarName.label                         "CertTrustSetting Toolbar">
 <!ENTITY certstrustsetting.toolbar.accesskey                         "t">
@@ -17,8 +19,9 @@
 <!ENTITY certstrustsetting.toolbar.setselectioncertsback.accesskey   "n">
 <!ENTITY certstrustsetting.toolbar.setimportantcertsback.label       "Vrátit důvěru důležitých certifikátů">
 <!ENTITY certstrustsetting.toolbar.setimportantcertsback.accesskey   "ý">
-<!ENTITY certstrustsetting.toolbar.cleancerts.label                  "Vyčistit důvěru certifikátů CA">
+<!ENTITY certstrustsetting.toolbar.cleancerts.label                  "Vyčistit důvěru certifikátů">
 <!ENTITY certstrustsetting.toolbar.cleancerts.accesskey              "d">
-
+<!ENTITY certstrustsetting.toolbar.getcertstojson.label              "Export seznamu certifikátů">
+<!ENTITY certstrustsetting.toolbar.getcertstojson.accesskey          "x">
 
 

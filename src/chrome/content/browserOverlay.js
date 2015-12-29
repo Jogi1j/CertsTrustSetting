@@ -37,30 +37,18 @@ CertsTrustSetting.BrowserOverlay = {
     this._logger.level = Log4Moz.Level["All"];
   },
   
-  // view
-  viewCerts : function() {
+  // Get number of certs in firefox
+  getCountOfCerts : function() {
     var certDB = Cc["@mozilla.org/security/x509certdb;1"].getService(Ci.nsIX509CertDB);  
     var certs = certDB.getCerts();  
     var enumerator = certs.getEnumerator(); 
-    var s = "";
     var count = 0;
-    var certsAlertText = "Náhled všech certifikátů, VČETNĚ NEDŮVĚRYHODNÝCH: \n";
     
     while (enumerator.hasMoreElements()) {
       var cert = enumerator.getNext().QueryInterface(Ci.nsIX509Cert);
-      
-      //window.alert(cert.tokenName);  
-      //if (cert.issuerCommonName != "" ) {
-        certsAlertText = certsAlertText + " \n " +  cert.issuerCommonName;
-        count++;
-      //}
-      //if (cert.commonName != "") {
-      //  
-      //}
-      
+        count++;      
     }
-    certsAlertText = count + " certifikátů \n" + certsAlertText;    
-    window.alert(certsAlertText);
+    return count;  
   },
   
   
@@ -94,6 +82,10 @@ CertsTrustSetting.BrowserOverlay = {
     file.append("myCerts.json");
     var data = '{"certs":[';
     
+    // get number of certs in firefox
+    var count = this.getCountOfCerts();
+    var i = 1;
+    
     // write info from cert8.db
     var certDB = Cc["@mozilla.org/security/x509certdb;1"].getService(Ci.nsIX509CertDB);
     var certs = certDB.getCerts();
@@ -113,10 +105,16 @@ CertsTrustSetting.BrowserOverlay = {
       }
       data = data + ', "organization":"' + cert.organization + '"';
       data = data + ', "serialNumber":"' + cert.serialNumber + '"';
-      data = data + '},'
       
-          
+      // last without a point
+      if ( i == count ) {
+        data = data + '}'
+      } else {
+        data = data + '},'
+      }
+      i++;    
     }
+    
     data = data + '\n]}';
     
     // You can also optionally pass a flags parameter here. It defaults to
@@ -160,40 +158,6 @@ CertsTrustSetting.BrowserOverlay = {
       var enumerator = certs.getEnumerator();
       while (enumerator.hasMoreElements()) {
         var cert = enumerator.getNext().QueryInterface(Ci.nsIX509Cert);
-        //if ((cert.commonName == "Deutsche Telekom Root CA 2")) {
-          //login.skype.com
-            //window.alert("\n Server: " + cert.commonName + cert.organization + " - "
-            //             + cert.certType + " - '" + cert.certType + "'");
-            //certDB.setCertTrust(cert, SERVER_CERT, "CT,CT,CT");
-            //certDB.setCertTrustFromString(cert,"");
-            //certDB.setCertTrustFromString(cert,"C,C,C");
-            
-            /**
-             *  Obtain a single comma separated human readable string describing
-             *  the certificate's certified usages.
-             *
-             *  @param localOnly Do not hit the network, even if revocation information
-             *                   downloading is currently activated.
-             *  @param verified The certificate verification result, see constants.
-             *  @param purposes The string listing the usages.
-             *  
-             *  void getUsagesString(in boolean localOnly, out uint32_t verified, out AString usages);
-             */
-
-            //var verified, usages;
-            //window.alert("start");
-            ////window.alert(cert.getUsagesString(false, verified, usages));
-            //cert.getUsagesString(false, verified, usages);
-            ////cert.getUsagesString(true, verified);
-            ////cert.getUsagesArray( true, verified, 1, usages)
-            //window.alert("skype first");
-            //window.alert(usages);
-            //window.alert("skype second");
-            //window.alett(usages[0]);
-            //window.alert("END !!!");
-
-        //}
-
         for (i = 0; i < jsonObject.certs.length; i++) {
           if (cert.commonName == jsonObject.certs[i].certName
               && cert.organization == jsonObject.certs[i].organization
@@ -326,7 +290,7 @@ CertsTrustSetting.BrowserOverlay = {
   
   
   
-  // Load .json file
+  // Load .json file for example
   loadJson : function() {
     var file = this.getLocalDirectory();
     file.append("certs.json");
@@ -347,8 +311,87 @@ CertsTrustSetting.BrowserOverlay = {
     };
     request.open("GET", url, true);
     request.send(null);
-  }
+  },
+  
+  
+  
+  // 
+  pokus : function() {
+    var file = this.getLocalDirectory();
+    file.append("certs.json");
+    let url = "file://" + file.path;
+    let request = Components.classes["@mozilla.org/xmlextras/xmlhttprequest;1"]
+                  .createInstance(Components.interfaces.nsIXMLHttpRequest);
+    request.onload = function(aEvent) {
+      
+      let text = aEvent.target.responseText;
+      let jsonObject = JSON.parse(text);
+      // Set certs
+      var certDB = Cc["@mozilla.org/security/x509certdb;1"].getService(Ci.nsIX509CertDB);
+      var certs = certDB.getCerts();
+      var enumerator = certs.getEnumerator();
+      while (enumerator.hasMoreElements()) {
+        var cert = enumerator.getNext().QueryInterface(Ci.nsIX509Cert);
+        if ((cert.commonName == "Deutsche Telekom Root CA 2")) {
+          //login.skype.com
+            //window.alert("\n Server: " + cert.commonName + cert.organization + " - "
+            //             + cert.certType + " - '" + cert.certType + "'");
+            //certDB.setCertTrust(cert, SERVER_CERT, "CT,CT,CT");
+            //certDB.setCertTrustFromString(cert,"");
+            //certDB.setCertTrustFromString(cert,"C,C,C");
+            
+            /**
+             *  Obtain a single comma separated human readable string describing
+             *  the certificate's certified usages.
+             *
+             *  @param localOnly Do not hit the network, even if revocation information
+             *                   downloading is currently activated.
+             *  @param verified The certificate verification result, see constants.
+             *  @param purposes The string listing the usages.
+             *  
+             *  void getUsagesString(in boolean localOnly, out uint32_t verified, out AString usages);
+             */
+
+            var verified, usages;
+            //usages = "";
+            //verified = [];
+            window.alert("start");
+            //console.log("pokus");
+            //window.alert("after console");
+            cert.getUsagesString(false, verified, usages);
+            //cert.getUsagesString(true, verified);
+            //cert.getUsagesArray(false, verified, 1, usages)
+            window.alert("after getusagesstring");
+            window.alert(usages);
+            window.alert("skype second");
+            window.alett(usages[0]);
+            window.alert("END !!!");
+
+        }
+
+        for (i = 0; i < jsonObject.certs.length; i++) {
+          if (cert.commonName == jsonObject.certs[i].certName
+              && cert.organization == jsonObject.certs[i].organization
+              && cert.serialNumber == jsonObject.certs[i].serialNumber) {
+            //certDB.setCertTrustFromString(cert,",,");
+          }
+        }     
+      }
+      //window.alert("Odstraněna důvěra u všech certifikátů");
+    };
+    request.onerror = function(aEvent) {
+      this._logger.error("Error Status: " + aEvent.target.status);
+    };
+    request.open("GET", url, true);
+    request.send(null);
+    this._logger.info("Metoda pokus");
+  },
+  
+  
 };
+
+
+
 
 
 window.addEventListener(

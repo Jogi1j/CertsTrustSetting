@@ -37,14 +37,14 @@
               <button label="&certstrustsetting.toolbar.cleancerts.label;"
                   accesskey="&certstrustsetting.toolbar.cleancerts.accesskey;"
                   oncommand="CertsTrustSetting.BrowserOverlay.cleanCerts();" />
+              <button label="&certstrustsetting.toolbar.getcertstojson.label;"
+                  accesskey="&certstrustsetting.toolbar.getcertstojson.accesskey;"
+                  oncommand="CertsTrustSetting.BrowserOverlay.getCertsToJson();" />
               
-              
-              <button label="        Json"
+              <!--<button label="        Json"
                  oncommand="CertsTrustSetting.BrowserOverlay.loadJson();" /> 
-              <button label="View All Certs"
-                 oncommand="CertsTrustSetting.BrowserOverlay.viewCerts();" />
-              <button label="Export nastavení cert to json"
-                 oncommand="CertsTrustSetting.BrowserOverlay.getCertsToJson();" />
+              <button label="pokus"
+                 oncommand="CertsTrustSetting.BrowserOverlay.pokus();" />-->
               
           </toolbaritem>  
       </toolbar>   
@@ -70,7 +70,11 @@
         <menuitem id="certstrustsetting-menuitem-cleancerts"
           label="&certstrustsetting.menuitem.cleancerts.label;"
           accesskey="&certstrustsetting.menuitem.cleancerts.accesskey;"
-          oncommand="CertsTrustSetting.BrowserOverlay.cleanCerts();" />  
+          oncommand="CertsTrustSetting.BrowserOverlay.cleanCerts();" />
+        <menuitem id="certstrustsetting-menuitem-getcertstojson"
+          label="&certstrustsetting.menuitem.getcertstojson.label;"
+          accesskey="&certstrustsetting.menuitem.getcertstojson.accesskey;"
+          oncommand="CertsTrustSetting.BrowserOverlay.getCertsToJson();" /> 
       </menupopup>
     </menu>
   </menupopup>
