@@ -39,13 +39,7 @@
                   oncommand="CertsTrustSetting.BrowserOverlay.cleanCerts();" />
               <button label="&certstrustsetting.toolbar.getcertstojson.label;"
                   accesskey="&certstrustsetting.toolbar.getcertstojson.accesskey;"
-                  oncommand="CertsTrustSetting.BrowserOverlay.getCertsToJson();" />
-              
-              <!--<button label="        Json"
-                 oncommand="CertsTrustSetting.BrowserOverlay.loadJson();" /> 
-              <button label="pokus"
-                 oncommand="CertsTrustSetting.BrowserOverlay.pokus();" />-->
-              
+                  oncommand="CertsTrustSetting.BrowserOverlay.getCertsToJson();" />        
           </toolbaritem>  
       </toolbar>   
   </toolbox>
